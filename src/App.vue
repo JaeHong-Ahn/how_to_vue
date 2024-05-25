@@ -1,8 +1,10 @@
 <!--자바 스크립트 코드가 들어감-->
 <script>
-// import { data } from './assets/movies.js';
 import data from './assets/movies.js';
 import Navbar from "@/components/Navbar.vue";
+import Modal from "@/components/Modal.vue";
+import Event from "@/components/Event.vue";
+import Movies from "@/components/Movies.vue";
 
 export default {
   name: 'App',
@@ -10,7 +12,8 @@ export default {
     return {
       isModal: false,
       data: data,
-      selectedMovie: 0
+      selectedMovie: 0,
+      text: "NETFLIX 강렬한 운명의 드라마, 경기크리처",
     }
   },
   methods: {
@@ -20,37 +23,28 @@ export default {
   },
   components: {
     Navbar: Navbar,
-  }
+    Modal: Modal,
+    Event: Event,
+    Movies: Movies,
+  },
+
 }
 </script>
 
 <!--HTML 코드가 들어감-->
 <template>
   <Navbar />
-  <h1>영화정보</h1>
-  <div v-for="(movie, i) in data" :key="i" class ="item">
-    <figure>
-      <img :src="`${movie.imgUrl}`" :alt="movie.title">
-    </figure>
-    <div class="info">
-      <h3 class="bg-yellow">{{ movie.title }}</h3>
-      <p>개봉: {{ movie.year }}</p>
-      <p>장르: {{ movie.category }}</p>
-      <button @:click="increaseLike(i)"> 좋아요 </button>
-      <span>{{ movie.like }}</span>
-      <p>
-        <button @click="isModal=true; selectedMovie=i"> 상세 보기 </button>
-      </p>
-    </div>
-  </div>
-
-  <div class="modal" v-if="isModal">
-    <div class="inner">
-      <h3>{{data[selectedMovie].title}}</h3>
-      <p>영화 설명</p>
-      <button @click="isModal=false"> 닫기 </button>
-    </div>
-  </div>
+  <Event :text="text" />
+  <Movies
+      :data="data"
+      @openModal = "isModal = true; selectedMovie=$event"
+      @increaseLike="increaseLike($event)"
+  />
+  <Modal :data="data"
+         :isModal="isModal"
+         :selectedMovie="selectedMovie"
+         @closeModal="isModal = false"
+  />
 </template>
 
 <!--CSS 코드가 들어감-->
