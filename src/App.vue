@@ -1,5 +1,32 @@
+<!--자바 스크립트 코드가 들어감-->
+<script>
+// import { data } from './assets/movies.js';
+import data from './assets/movies.js';
+import Navbar from "@/components/Navbar.vue";
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      isModal: false,
+      data: data,
+      selectedMovie: 0
+    }
+  },
+  methods: {
+    increaseLike(i) {
+      this.data[i].like += 1;
+    },
+  },
+  components: {
+    Navbar: Navbar,
+  }
+}
+</script>
+
 <!--HTML 코드가 들어감-->
 <template>
+  <Navbar />
   <h1>영화정보</h1>
   <div v-for="(movie, i) in data" :key="i" class ="item">
     <figure>
@@ -25,27 +52,6 @@
     </div>
   </div>
 </template>
-
-<!--자바 스크립트 코드가 들어감-->
-<script>
-// import { data } from './assets/movies.js';
-import data from './assets/movies.js';
-  export default {
-    name: 'App',
-    data() {
-      return {
-        isModal: false,
-        data: data,
-        selectedMovie: 0
-      }
-    },
-    methods: {
-      increaseLike(i) {
-        this.data[i].like += 1;
-      },
-    }
-  }
-</script>
 
 <!--CSS 코드가 들어감-->
 <style scoped>
