@@ -29,6 +29,9 @@ export default {
         return movie.title.includes(title);
       })
     },
+    showAllMovies() {
+      this.data_temp = [...this.data];
+    }
   },
   components: {
     Navbar: Navbar,
@@ -45,6 +48,9 @@ export default {
   <Navbar />
   <Event :text="text" />
   <SearchBar :data="data_temp" @searchMovie="searchMovie($event)"/>
+  <p>
+    <button @click="showAllMovies"> 전체보기 </button>
+  </p>
   <Movies
       :data="data_temp"
       @openModal = "isModal = true; selectedMovie=$event"
